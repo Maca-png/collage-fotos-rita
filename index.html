@@ -3,23 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rita ❤️</title>
+<title>Rita 💛</title>
 
 <style>
-body{
+*{
     margin:0;
     padding:0;
-    background:#fff;
+    box-sizing:border-box;
+}
+
+body{
+    background:#ffffff;
+    overflow-x:hidden;
 }
 
 img{
-    display:block;
     width:100%;
-    height:auto;
+    display:block;
+    opacity:0;
+    transform:translateY(25px);
+    transition:opacity .8s ease, transform .8s ease;
+}
+
+img.visible{
+    opacity:1;
+    transform:translateY(0);
+}
+
+.heart{
+    position:fixed;
+    bottom:-30px;
+    font-size:22px;
+    animation:subir 4s linear forwards;
+    pointer-events:none;
+    z-index:999;
+}
+
+@keyframes subir{
+    from{
+        transform:translateY(0);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-300px);
+        opacity:0;
+    }
 }
 </style>
-
 </head>
+
 <body>
 
 <img src="1.png.png">
@@ -36,6 +68,61 @@ img{
 <img src="12.png.png">
 <img src="13.png.png">
 <img src="14.png.png">
+
+<script>
+
+document.querySelectorAll("img").forEach((img)=>{
+
+    img.onload=()=>{
+
+        const observer=new IntersectionObserver((entries)=>{
+
+            entries.forEach(entry=>{
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add("visible");
+
+                    observer.unobserve(entry.target);
+
+                }
+
+            });
+
+        },{threshold:0.15});
+
+        observer.observe(img);
+
+    };
+
+});
+
+function corazon(){
+
+    const h=document.createElement("div");
+
+    h.className="heart";
+
+    h.innerHTML="💛";
+
+    h.style.left=(10+Math.random()*80)+"vw";
+
+    document.body.appendChild(h);
+
+    setTimeout(()=>{
+
+        h.remove();
+
+    },4000);
+
+}
+
+setTimeout(corazon,400);
+setTimeout(corazon,900);
+setTimeout(corazon,1500);
+setTimeout(corazon,2200);
+
+</script>
 
 </body>
 </html>
